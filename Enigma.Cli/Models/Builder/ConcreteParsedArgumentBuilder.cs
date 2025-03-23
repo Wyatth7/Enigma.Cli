@@ -4,8 +4,8 @@ namespace Enigma.Cli.Models.Builder;
 
 public class ConcreteParsedArgumentBuilder : IParsedArgumentBuilder
 {
-    private ParsedArguments _parsedArguments = new();
-    private string[] _args = [];
+    private ParsedBuilderArguments _parsedBuilderArguments = new();
+    private readonly string[] _args;
 
     private IQueryable<string> Query => _args.AsQueryable();
 
@@ -17,16 +17,24 @@ public class ConcreteParsedArgumentBuilder : IParsedArgumentBuilder
 
     private void Reset()
     {
-        _parsedArguments = new ParsedArguments();
+        _parsedBuilderArguments = new ParsedBuilderArguments();
     }
     
-    public void AddFile() => _parsedArguments.File = new FileArgument().Parse(Query);
+    public void AddFile() => _parsedBuilderArguments.File = new FileArgument().Parse(Query);
 
-    public void AddKey() => _parsedArguments.Key = new KeyArgument().Parse(Query);
+    public void AddKey() => _parsedBuilderArguments.Key = new KeyArgument().Parse(Query);
 
-    public void AddEncrypt() => _parsedArguments.Encrypt = new EncryptArgument().Parse(Query);
+    public void AddEncrypt() => _parsedBuilderArguments.Encrypt = new EncryptArgument().Parse(Query);
 
-    public void AddDecrypt() => _parsedArguments.Decrypt = new DecryptArgument().Parse(Query);
+    public void AddDecrypt() => _parsedBuilderArguments.Decrypt = new DecryptArgument().Parse(Query);
 
-    public void AddOutput() => _parsedArguments.Output = new OutputArgument().Parse(Query);
+    public void AddOutput() => _parsedBuilderArguments.Output = new OutputArgument().Parse(Query);
+
+    public ParsedArguments GetResult() => new (
+        _parsedBuilderArguments.File,
+        _parsedBuilderArguments.Key,
+        _parsedBuilderArguments.Output,
+        _parsedBuilderArguments.Encrypt,
+        _parsedBuilderArguments.Decrypt
+        );
 }

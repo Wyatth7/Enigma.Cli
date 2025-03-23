@@ -1,6 +1,6 @@
-namespace Enigma.Cli.Models;
+namespace Enigma.Cli.Models.Builder;
 
-public class ParsedArguments
+public class ParsedBuilderArguments
 {
     public string File { get; set; } = string.Empty;
 

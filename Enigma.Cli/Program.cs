@@ -1,10 +1,4 @@
-﻿
-var allArgs = args.AsQueryable();
+﻿using Enigma.Cli;
 
-var file = allArgs.SingleOrDefault(v => v.Contains("--file="));
-var encrypt = allArgs.SingleOrDefault(v => v.Contains("--encrypt"));
-var decrypt = allArgs.SingleOrDefault(v => v.Contains("--decrypt"));
-
-Console.WriteLine(file);
-Console.WriteLine(encrypt);
-Console.WriteLine(decrypt);
+var arguments = new ArgumentParser().Parse(args);
+Console.WriteLine(arguments.ToString());
