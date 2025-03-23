@@ -27,37 +27,53 @@ public static class Crypto
     public static async Task Decrypt(string file, string key)
     {
         var value = string.Empty;
-        using (var fileStream =
-               new FileStream(file, FileMode.Open))
+
+        try
         {
-            using var aes = Aes.Create();
-            var iv = new byte[aes.IV.Length];
 
-            var bytesToRead = aes.IV.Length;
-            var bytesRead = 0;
-
-            while (bytesToRead > 0)
+            using (var fileStream =
+                   new FileStream(file, FileMode.Open))
             {
-                var n = await fileStream.ReadAsync(iv, bytesRead, bytesToRead);
-                if (n == 0) break;
+                using var aes = Aes.Create();
+                var iv = new byte[aes.IV.Length];
 
-                bytesRead += n;
-                bytesToRead -= n;
+                var bytesToRead = aes.IV.Length;
+                var bytesRead = 0;
+
+                while (bytesToRead > 0)
+                {
+                    var n = await fileStream.ReadAsync(iv, bytesRead, bytesToRead);
+                    if (n == 0) break;
+
+                    bytesRead += n;
+                    bytesToRead -= n;
+                }
+
+                await using var crypto =
+                    new CryptoStream(fileStream, aes.CreateDecryptor(Key(key), iv), CryptoStreamMode.Read);
+                using var streamReader = new StreamReader(crypto);
+                
+               value = await streamReader.ReadToEndAsync();
             }
-
-            await using var crypto =
-                new CryptoStream(fileStream, aes.CreateDecryptor(Key(key), iv), CryptoStreamMode.Read);
-            using var streamReader = new StreamReader(crypto);
-
-           value = await streamReader.ReadToEndAsync();
+        }
+        catch (Exception)
+        {
+            Logger.Error($"Failed to decrypt {file}: invalid key or file", true);
         }
         await WriteToFile(value, file);
     }
 
     private static async Task WriteToFile(string value, string file)
     {
-        var fileBytes = Convert.FromBase64String(value);
-        await File.WriteAllBytesAsync(file, fileBytes);
+        try
+        {
+            var fileBytes = Convert.FromBase64String(value);
+            await File.WriteAllBytesAsync(file, fileBytes);
+        }
+        catch (Exception)
+        {
+            Logger.Error("Failed to write value to file", true);
+        }
     }
 
     private static byte[] Key(string key) => Encoding.ASCII.GetBytes(key);
