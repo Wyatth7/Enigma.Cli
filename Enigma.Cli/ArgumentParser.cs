@@ -23,7 +23,7 @@ public class ArgumentParser
         var builder = new ConcreteParsedArgumentBuilder(args);
         
         builder.AddFile();
-        // builder.AddKey();
+        builder.AddKey();
         builder.AddEncrypt();
         builder.AddDecrypt();
 

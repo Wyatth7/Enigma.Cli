@@ -13,7 +13,34 @@ public static class Logger
         if (exit) Environment.Exit(exitCode);
    }
 
-   // private static void ShowSpinner(string message)
+   public static void KeyValue(string key, string value, ConsoleColor keyColor, ConsoleColor valueColor)
+   {
+       Paint($"{key}: ", keyColor);
+       Paint(value, valueColor);
+       Console.WriteLine();
+   }
+
+
+   private static void PaintLine(string message, ConsoleColor color = ConsoleColor.Cyan) 
+       => Paint(message, color, true);
+
+    private static void Paint(string message, ConsoleColor color = ConsoleColor.Cyan, bool newLine = false)
+    {
+        Console.ForegroundColor = color;
+        
+        if (newLine)
+        {
+            Console.WriteLine(message);
+        }
+        else
+        {
+            Console.Write(message);
+        }
+        
+        Console.ForegroundColor = ConsoleColor.Cyan;
+    }
+
+    // private static void ShowSpinner(string message)
    // {
    //      COME BACK TO THIS LATER... NEED TO PUT THIS ON ANOTHER THREAD
    //     _showSpinner = true;
@@ -38,14 +65,4 @@ public static class Logger
    //          Console.SetCursorPosition(0, currentLine);
    //     }
    // }
-
-   private static void PaintLine(string message, ConsoleColor color = ConsoleColor.Cyan) 
-       => Paint(message, color, true);
-
-    private static void Paint(string message, ConsoleColor color = ConsoleColor.Cyan, bool newLine = false)
-    {
-        Console.ForegroundColor = color;
-        Console.WriteLine(message);
-        Console.ForegroundColor = ConsoleColor.Cyan;
-    }
 }

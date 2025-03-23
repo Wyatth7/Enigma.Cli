@@ -1,3 +1,5 @@
+using Enigma.Cli.Models.Arguments;
+
 namespace Enigma.Cli.Extensions;
 
 public static class ValueArgumentExtensions
@@ -19,5 +21,29 @@ public static class ValueArgumentExtensions
         
         Logger.Error("Arguments cannot contain multiple = operators.");
         return false;
+    }
+    
+    public static string ParseValueArgument<TArgumentType>(this Argument<TArgumentType> arg, IQueryable<string> args)
+    {
+        if (!arg.ValidArgCount(args))
+            Logger.Error(InvalidArgumentCountMessage(arg, args.Count(a => a.Contains(arg.Selector))), true);
+        
+        var validValue = args
+            .First(a => a.Contains(arg.Selector))
+            .TryGetArgValue(out var parsedValue);
+
+        if (!validValue) Environment.Exit(1);
+
+        return parsedValue;
+    }
+
+    private static string InvalidArgumentCountMessage<TArgumentType>(Argument<TArgumentType> arg, int occurrences)
+    {
+        var messagePart = $"Invalid use of {arg.Selector}. ";
+        
+        if (arg.MinAllowed == arg.MaxAllowed && occurrences != arg.MinAllowed)
+            return $"{messagePart}{arg.Selector} must be used {arg.MinAllowed} times.";
+
+        return $"{messagePart}{arg.Selector} must be used {arg.MinAllowed} to {arg.MaxAllowed} times";
     }
 }

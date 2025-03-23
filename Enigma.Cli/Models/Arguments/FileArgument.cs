@@ -6,14 +6,10 @@ public class FileArgument() : Argument<string>("file", minAllowed: 1, hasValue: 
 {
     public override string Parse(IQueryable<string> args)
     {
-        if (!this.ValidArgCount(args))
-            Logger.Error($"{Selector} is required, and can only be used once.", true);
-
-        var validValue = args.First(arg => arg.Contains(Selector)).TryGetArgValue(out var parsedValue);
-
-        if (!validValue || !Exists(parsedValue))
-            Environment.Exit(1);
-
+        var parsedValue = this.ParseValueArgument(args);
+        
+        if (!Exists(parsedValue)) Environment.Exit(1);
+        
         return parsedValue;
     }
 
