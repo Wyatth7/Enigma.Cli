@@ -1,7 +1,6 @@
-using System.Text;
 using Enigma.Cli.Extensions;
 
-namespace Enigma.Cli.Models.Arguments;
+namespace Enigma.Cli.Builder.Arguments;
 
 public class KeyArgument() : Argument<string>("key", minAllowed: 1, hasValue:true)
 {
@@ -9,8 +8,8 @@ public class KeyArgument() : Argument<string>("key", minAllowed: 1, hasValue:tru
     {
         var parsedValue = this.ParseValueArgument(args);
         
-        if (Encoding.ASCII.GetBytes(parsedValue).Length != 16)
-            Logger.Error("Invalid key provided. Key must be 16 bytes.", true);
+        if (parsedValue.Length is not (16 or 24 or 32))
+            Logger.Error("Invalid key provided. Key must be 16, 24, or 32 bytes.", true);
         
         return parsedValue;
     }

@@ -1,4 +1,4 @@
-namespace Enigma.Cli.Models.Arguments;
+namespace Enigma.Cli.Builder.Arguments;
 
 public record ParsedArguments(string File, string Key, string Output, bool Encrypt, bool Decrypt)
 {

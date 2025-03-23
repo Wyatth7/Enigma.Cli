@@ -5,6 +5,11 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>1.0.1</Version>
+        <PackageId>Enigma.Cli</PackageId>
+        <PackageDescription>An simple and easy to use cryptography tool.</PackageDescription>
+        <Authors>Wyatth7</Authors>
+        <RepositoryUrl>https://github.com/Wyatth7/Enigma.Cli</RepositoryUrl>
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>enigma</ToolCommandName>
         <PackageOutputPath>./nupkg</PackageOutputPath>

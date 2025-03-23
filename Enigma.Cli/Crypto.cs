@@ -5,7 +5,7 @@ namespace Enigma.Cli;
 
 public static class Crypto
 {
-    public static async Task Encrypt(string file, string key)
+    public static async Task Encrypt(string file, string key, int keySize = 256)
     {
         var fileContents = await FileToBase64(file);
         await using var fileStream =
@@ -13,6 +13,7 @@ public static class Crypto
 
         using var aes = Aes.Create();
 
+        aes.KeySize = keySize;
         aes.Key = Key(key);
         var iv = aes.IV;
 
@@ -30,11 +31,12 @@ public static class Crypto
 
         try
         {
-
             using (var fileStream =
                    new FileStream(file, FileMode.Open))
             {
                 using var aes = Aes.Create();
+                
+                aes.KeySize = key.Length * 8;
                 var iv = new byte[aes.IV.Length];
 
                 var bytesToRead = aes.IV.Length;

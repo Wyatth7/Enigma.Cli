@@ -1,4 +1,4 @@
-namespace Enigma.Cli.Models.Arguments;
+namespace Enigma.Cli.Builder.Arguments;
 
 public class OutputArgument() : Argument<string>("output")
 {

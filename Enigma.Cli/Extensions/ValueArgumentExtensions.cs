@@ -1,10 +1,10 @@
-using Enigma.Cli.Models.Arguments;
+using Enigma.Cli.Builder.Arguments;
 
 namespace Enigma.Cli.Extensions;
 
 public static class ValueArgumentExtensions
 {
-    public static bool TryGetArgValue(this string value, out string parsedValue)
+    private static bool TryGetArgValue(this string value, out string parsedValue)
     {
         parsedValue = string.Empty;
         if (!value.Contains('='))

@@ -1,6 +1,6 @@
 using Enigma.Cli.Extensions;
 
-namespace Enigma.Cli.Models.Arguments;
+namespace Enigma.Cli.Builder.Arguments;
 
 public class FileArgument() : Argument<string>("file", minAllowed: 1, hasValue: true)
 {

@@ -1,4 +1,4 @@
-namespace Enigma.Cli.Models.Arguments;
+namespace Enigma.Cli.Builder.Arguments;
 
 public abstract class Argument<TValue>(
     string selector,

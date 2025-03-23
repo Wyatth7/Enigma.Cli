@@ -1,5 +1,5 @@
 using Enigma.Cli.Builder;
-using Enigma.Cli.Models.Arguments;
+using Enigma.Cli.Builder.Arguments;
 
 namespace Enigma.Cli;
 
