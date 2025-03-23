@@ -1,4 +1,4 @@
-namespace Enigma.Cli.Models.Builder;
+namespace Enigma.Cli.Builder;
 
 public class ParsedBuilderArguments
 {

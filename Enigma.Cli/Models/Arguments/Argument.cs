@@ -1,5 +1,3 @@
-using Enigma.Cli.Models.Builder;
-
 namespace Enigma.Cli.Models.Arguments;
 
 public abstract class Argument<TValue>(
@@ -17,4 +15,4 @@ public abstract class Argument<TValue>(
     public bool HasValue { get; } = hasValue;
 
     public abstract TValue Parse(IQueryable<string> args);
-};
+}

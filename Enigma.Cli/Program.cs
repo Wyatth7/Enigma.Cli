@@ -1,4 +1,4 @@
 ﻿using Enigma.Cli;
 
 var arguments = new ArgumentParser().Parse(args);
-Console.WriteLine(arguments.ToString());
+Logger.Log(arguments.ToString(), ConsoleColor.Blue);

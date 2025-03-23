@@ -1,18 +1,19 @@
 using Enigma.Cli.Models.Arguments;
 
-namespace Enigma.Cli.Models.Builder;
+namespace Enigma.Cli.Builder;
 
 public class ConcreteParsedArgumentBuilder : IParsedArgumentBuilder
 {
     private ParsedBuilderArguments _parsedBuilderArguments = new();
     private readonly string[] _args;
 
-    private IQueryable<string> Query => _args.AsQueryable();
+    private IQueryable<string> Query { get; set; }
 
     public ConcreteParsedArgumentBuilder(string[] args)
     {
         Reset();
         _args = args;
+        Query = args.AsQueryable();
     }
 
     private void Reset()

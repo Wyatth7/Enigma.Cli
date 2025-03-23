@@ -9,6 +9,28 @@ public class FileArgument() : Argument<string>("file", minAllowed: 1, hasValue: 
         if (!this.ValidArgCount(args))
             Logger.Error($"{Selector} is required, and can only be used once.", true);
 
-        return args.First(arg => arg.Contains(Selector)).GetArgValue();
+        var validValue = args.First(arg => arg.Contains(Selector)).TryGetArgValue(out var parsedValue);
+
+        if (!validValue || !Exists(parsedValue))
+            Environment.Exit(1);
+
+        return parsedValue;
     }
+
+    private static bool Exists(string file)
+    {
+        var fullPath = file;
+        
+        // if file is given without a path, create path based on current dir 
+        if (!FileContainsPath(file))
+            fullPath = $"{Directory.GetCurrentDirectory()}\\{file}";
+
+        var exists = File.Exists(fullPath);
+        if (exists) return true;
+        
+        Logger.Error($"{file} does not exist.");
+        return false;
+    }
+
+    private static bool FileContainsPath(string path) => path.Contains('\\') || path.Contains('/');
 }

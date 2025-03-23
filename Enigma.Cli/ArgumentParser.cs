@@ -1,7 +1,5 @@
-using System.Collections.Immutable;
-using Enigma.Cli.Models;
+using Enigma.Cli.Builder;
 using Enigma.Cli.Models.Arguments;
-using Enigma.Cli.Models.Builder;
 
 namespace Enigma.Cli;
 
@@ -20,7 +18,7 @@ public class ArgumentParser
         return parsedArgs;
     }
 
-    private ParsedArguments GetArguments(string[] args)
+    private static ParsedArguments GetArguments(string[] args)
     {
         var builder = new ConcreteParsedArgumentBuilder(args);
         

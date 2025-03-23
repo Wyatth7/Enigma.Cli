@@ -7,10 +7,10 @@ public record ParsedArguments(string File, string Key, string Output, bool Encry
         switch (Encrypt)
         {
             case false when !Decrypt:
-                Logger.Error("Either --encryption or --decryption must be set.");
+                Logger.Error("Either --encrypt or --decrypt must be set.");
                 return false;
             case true when Decrypt:
-                Logger.Error("Both --encryption and --decryption cannot be set in the same command.");
+                Logger.Error("Both --encrypt and --decrypt cannot be set in the same command.");
                 return false;
         }
 
