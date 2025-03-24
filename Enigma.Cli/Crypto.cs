@@ -1,11 +1,12 @@
 using System.Security.Cryptography;
 using System.Text;
+using Enigma.Cli.Extensions;
 
 namespace Enigma.Cli;
 
 public static class Crypto
 {
-    public static async Task Encrypt(string file, string key, int keySize = 256)
+    public static async Task Encrypt(string file, string key)
     {
         var fileContents = await FileToBase64(file);
         await using var fileStream =
@@ -13,8 +14,8 @@ public static class Crypto
 
         using var aes = Aes.Create();
 
-        aes.KeySize = keySize;
-        aes.Key = Key(key);
+        aes.KeySize = KeySize(key);
+        aes.Key = key.AsBytes();
         var iv = aes.IV;
 
         await fileStream.WriteAsync(iv, 0, iv.Length);
@@ -35,8 +36,8 @@ public static class Crypto
                    new FileStream(file, FileMode.Open))
             {
                 using var aes = Aes.Create();
-                
-                aes.KeySize = key.Length * 8;
+
+                aes.KeySize = KeySize(key);
                 var iv = new byte[aes.IV.Length];
 
                 var bytesToRead = aes.IV.Length;
@@ -52,7 +53,7 @@ public static class Crypto
                 }
 
                 await using var crypto =
-                    new CryptoStream(fileStream, aes.CreateDecryptor(Key(key), iv), CryptoStreamMode.Read);
+                    new CryptoStream(fileStream, aes.CreateDecryptor(key.AsBytes(), iv), CryptoStreamMode.Read);
                 using var streamReader = new StreamReader(crypto);
                 
                value = await streamReader.ReadToEndAsync();
@@ -65,6 +66,9 @@ public static class Crypto
         await WriteToFile(value, file);
     }
 
+    private static int KeySize(string key) =>
+        key.ValidKeyLength() ? key.KeySize() : throw new CryptographicException("Invalid key length.");
+    
     private static async Task WriteToFile(string value, string file)
     {
         try
@@ -77,8 +81,6 @@ public static class Crypto
             Logger.Error("Failed to write value to file", true);
         }
     }
-
-    private static byte[] Key(string key) => Encoding.ASCII.GetBytes(key);
     
     private static async Task<string> FileToBase64(string path)
     {
