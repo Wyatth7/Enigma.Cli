@@ -13,9 +13,10 @@ public static class Logger
         if (exit) Environment.Exit(exitCode);
    }
 
-   public static void KeyValue(string key, string value, ConsoleColor keyColor, ConsoleColor valueColor)
+   public static void KeyValue(string key, string value, ConsoleColor keyColor = ConsoleColor.Cyan, ConsoleColor valueColor = ConsoleColor.Cyan, string separator = "")
    {
-       Paint($"{key}: ", keyColor);
+       Paint(key, keyColor);
+       Paint(string.IsNullOrWhiteSpace(separator) ? ":" : separator, keyColor);
        Paint(value, valueColor);
        Console.WriteLine();
    }

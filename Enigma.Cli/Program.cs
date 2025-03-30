@@ -1,18 +1,18 @@
-﻿using Enigma.Cli;
+﻿using System.Reflection;
+using Enigma.Cli;
 
-var arguments = new ArgumentParser().Parse(args);
-
-if (arguments.Encrypt)
+if (args.Length == 0 || args[0] == "--version" || args[0] == "-v")
 {
-    await Crypto.Encrypt(arguments.File, arguments.Key);
-}
-else
-{
-    await Crypto.Decrypt(arguments.File, arguments.Key);
+    Logger.KeyValue(
+        "Enigma CLI",
+        $"v{Assembly.GetExecutingAssembly()
+            .GetName()
+            .Version!
+            .ToString(3)}",
+        ConsoleColor.Blue,
+        ConsoleColor.Yellow,
+        " => ");
+    return;
 }
 
-Logger.KeyValue(
-    $"{(arguments.Encrypt ? "Encryption" : "Decryption")} Succeeded",
-    arguments.File, 
-    ConsoleColor.Yellow, 
-    ConsoleColor.Blue);
+await CommandProcessor.Process(args);
