@@ -17,7 +17,8 @@ public class EncryptDirector : ICommandDirector<ParsedEncryptionArguments>
             $"{(parsed.Encrypt ? "Encryption" : "Decryption")} Succeeded",
             parsed.File, 
             ConsoleColor.Yellow, 
-            ConsoleColor.Blue);
+            ConsoleColor.Blue,
+            " => ");
     }
 
     public ParsedEncryptionArguments Build(IParsedArgumentBuilder<ParsedEncryptionArguments> builder)
