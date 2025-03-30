@@ -2,3 +2,4 @@
 /Enigma.Cli/obj
 /Enigma.Cli/nupkg
 .idea
+/Enigma.Cli/nuget.config
