@@ -15,4 +15,10 @@ if (args.Length == 0 || args[0] == "--version" || args[0] == "-v")
     return;
 }
 
+if (args[0] == "--help" || args[0] == "-h1")
+{
+    Logger.Log(new HelpPrinter().Print(), ConsoleColor.Cyan);
+    return;
+}
+        
 await CommandProcessor.Process(args);
