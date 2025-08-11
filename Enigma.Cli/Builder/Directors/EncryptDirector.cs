@@ -1,4 +1,5 @@
 using Enigma.Cli.Builder.Arguments;
+using Enigma.Cli.Cryptography;
 
 namespace Enigma.Cli.Builder.Directors;
 

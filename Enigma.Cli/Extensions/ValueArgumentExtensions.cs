@@ -4,14 +4,12 @@ namespace Enigma.Cli.Extensions;
 
 public static class ValueArgumentExtensions
 {
-    private static bool TryGetArgValue(this string value, out string parsedValue)
+    private static bool TryGetArgValue(this string? value, out string parsedValue)
     {
         parsedValue = string.Empty;
-        if (!value.Contains('='))
-        {
-            Logger.Error("Argument does not contain a value or is invalid.");
+        
+        if (string.IsNullOrWhiteSpace(value) || !value.Contains('='))
             return false;
-        }
 
         if (value.Where(v => v.Equals('=')).ToArray().Length <= 1)
         {
@@ -23,16 +21,16 @@ public static class ValueArgumentExtensions
         return false;
     }
     
-    public static string ParseValueArgument<TArgumentType>(this Argument<TArgumentType> arg, IQueryable<string> args)
+    public static string ParseValueArgument<TArgumentType>(this Argument<TArgumentType> arg, IQueryable<string> args, bool allowNull = false)
     {
         if (!arg.ValidArgCount(args))
             Logger.Error(InvalidArgumentCountMessage(arg, args.Count(a => a.Contains(arg.Selector))), true);
         
         var validValue = args
-            .First(a => a.Contains(arg.Selector))
+            .FirstOrDefault(a => a.Contains(arg.Selector))
             .TryGetArgValue(out var parsedValue);
 
-        if (!validValue) Environment.Exit(1);
+        if (!validValue && !allowNull) Environment.Exit(1);
 
         return parsedValue;
     }

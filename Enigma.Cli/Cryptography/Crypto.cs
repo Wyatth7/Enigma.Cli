@@ -1,8 +1,7 @@
 using System.Security.Cryptography;
-using System.Text;
 using Enigma.Cli.Extensions;
 
-namespace Enigma.Cli;
+namespace Enigma.Cli.Cryptography;
 
 public static class Crypto
 {
