@@ -15,6 +15,8 @@ public static class CommandProcessor
 
         var (commandType, commandArgs) = GetCommand(args);
 
+        Console.WriteLine(commandType);
+        Console.WriteLine(string.Join(", ", commandArgs));
         await ExecuteCommand(commandType, commandArgs);
     }
 

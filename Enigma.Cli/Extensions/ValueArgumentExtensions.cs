@@ -24,10 +24,10 @@ public static class ValueArgumentExtensions
     public static string ParseValueArgument<TArgumentType>(this Argument<TArgumentType> arg, IQueryable<string> args, bool allowNull = false)
     {
         if (!arg.ValidArgCount(args))
-            Logger.Error(InvalidArgumentCountMessage(arg, args.Count(a => a.Contains(arg.Selector))), true);
+            Logger.Error(InvalidArgumentCountMessage(arg, args.Count(a => a.ContainsSelector(arg.Selector))), true);
         
         var validValue = args
-            .FirstOrDefault(a => a.Contains(arg.Selector))
+            .FirstOrDefault(a => a.ContainsSelector(arg.Selector))
             .TryGetArgValue(out var parsedValue);
 
         if (!validValue && !allowNull) Environment.Exit(1);

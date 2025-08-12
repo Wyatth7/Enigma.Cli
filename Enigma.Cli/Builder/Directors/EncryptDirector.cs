@@ -9,10 +9,8 @@ public class EncryptDirector : ICommandDirector<ParsedEncryptionArguments>
     {
         var parsed = Build(new ConcreteEncryptionBuilder(args, command == CommandType.Encrypt));
 
-        if (parsed.Encrypt)
-            await Crypto.Encrypt(parsed.File, parsed.Key);
-        else 
-            await Crypto.Decrypt(parsed.File, parsed.Key);
+        Console.WriteLine(parsed.ToString());
+        await CryptographyHandler.Handle(parsed);
         
         Logger.KeyValue(
             $"{(parsed.Encrypt ? "Encryption" : "Decryption")} Succeeded",
@@ -26,6 +24,7 @@ public class EncryptDirector : ICommandDirector<ParsedEncryptionArguments>
     {
         builder.AddFile();
         builder.AddKey();
+        builder.AddRecurse();
 
         return builder.GetResult();
     }

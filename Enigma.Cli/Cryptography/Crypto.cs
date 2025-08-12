@@ -3,9 +3,9 @@ using Enigma.Cli.Extensions;
 
 namespace Enigma.Cli.Cryptography;
 
-public static class Crypto
+public class Crypto : ICrypto
 {
-    public static async Task Encrypt(string file, string key)
+    public async Task Encrypt(string file, string key)
     {
         var fileContents = await FileToBase64(file);
         await using var fileStream =
@@ -25,7 +25,7 @@ public static class Crypto
         await streamWriter.WriteAsync(fileContents);
     }
 
-    public static async Task Decrypt(string file, string key)
+    public async Task Decrypt(string file, string key)
     {
         var value = string.Empty;
 

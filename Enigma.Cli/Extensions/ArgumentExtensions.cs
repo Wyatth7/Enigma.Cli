@@ -7,7 +7,7 @@ public static class ArgumentExtensions
     public static bool ValidArgCount<TArgumentValue>(this Argument<TArgumentValue> arg, IQueryable<string> args)
     {
         var argsFound = args
-            .Where(v => v.Contains(arg.Selector))
+            .Where(v => v.ContainsSelector(arg.Selector))
             .ToArray()
             .Length;
 
