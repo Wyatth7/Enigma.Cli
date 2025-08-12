@@ -86,6 +86,9 @@ Run the following command to encrypt or decrypt a file.
 ## Using shorthand arguments
 
 In order to use shorthand variants of arguments and not conflict with .NET Core arguments,
-you will need to use uppercase characters instead of lowercase characters.
+you will need to
 
-`dotnet run <encrypt | decrypt> -F=/path/to/directory -R`
+1. Navigate to one level above the Enigma.Cli project. 
+2. Use commands similar to the following
+
+`dotnet run --project Enigma.Cli -- <encrypt | decrypt> -f=/path/to/directory -r`

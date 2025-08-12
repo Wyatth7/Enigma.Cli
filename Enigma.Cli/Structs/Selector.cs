@@ -6,11 +6,6 @@ public readonly record struct Selector
     {
         Value = value;
         Shortcut = string.IsNullOrWhiteSpace(shortcut) ? $"-{value[0]}" : shortcut;
-        #if DEBUG
-
-        Shortcut = Shortcut.ToUpper();
-        
-        #endif
     }
 
     private readonly string _value = string.Empty;
