@@ -5,7 +5,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>1.2.1</Version>
+        <Version>1.2.2</Version>
         <PackageId>Enigma.Cli</PackageId>
         <PackageDescription>An simple and easy to use cryptography tool.</PackageDescription>
         <Authors>Wyatth7</Authors>
@@ -13,6 +13,10 @@
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>enigma</ToolCommandName>
         <PackageOutputPath>./nupkg</PackageOutputPath>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
+    <ItemGroup>
+        <None Include="../README.md" Pack="true" PackagePath="../"/>
+    </ItemGroup>
 </Project>
