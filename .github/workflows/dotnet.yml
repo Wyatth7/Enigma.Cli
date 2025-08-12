@@ -27,6 +27,6 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Pack Nuget
-      run: dotnet pack -c Relase --no-build --output .
+      run: dotnet pack -c Release --no-build --output .
     - name: Push to Nuget
       run: dotnet nuget push "*.nupk" --api-key ${{ secrets.ENIGMA_CLI_NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
