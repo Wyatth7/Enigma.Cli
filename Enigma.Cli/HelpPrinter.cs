@@ -36,7 +36,13 @@ public class HelpPrinter
 
     private void AddOptions()
     {
-        _builder.AppendLine("Extra Options:");
-        _builder.AppendLine("  --version, --help");
+        _builder.AppendLine("Arguments:");
+        _builder.AppendLine("  --file -f      Required; Value argument; Specifies the file or directory path. ");
+        _builder.AppendLine("  --key -k       Optional; Value argument; Specifies the key. ");
+        _builder.AppendLine(
+            "  --recurse -r   Optional; Flag argument;  Specifies if the application will recurse starting at the specified directory path.");
+        
+        _builder.AppendLine("Extra:");
+        _builder.AppendLine("  --version -v | --help -h");
     }
 }
