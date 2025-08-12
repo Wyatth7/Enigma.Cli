@@ -29,4 +29,4 @@ jobs:
     - name: Pack Nuget
       run: dotnet pack -c Release --no-build --output .
     - name: Push to Nuget
-      run: dotnet nuget push "*.nupk" --api-key ${{ secrets.ENIGMA_CLI_NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "*.nupkg" --api-key ${{ secrets.ENIGMA_CLI_NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
