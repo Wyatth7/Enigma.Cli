@@ -9,7 +9,6 @@ public class EncryptDirector : ICommandDirector<ParsedEncryptionArguments>
     {
         var parsed = Build(new ConcreteEncryptionBuilder(args, command == CommandType.Encrypt));
 
-        Console.WriteLine(parsed.ToString());
         await CryptographyHandler.Handle(parsed);
         
         Logger.KeyValue(

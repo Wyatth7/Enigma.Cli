@@ -23,6 +23,9 @@ public class FileArgument() : Argument<string>("file", minAllowed: 1, hasValue: 
 
         var exists = File.Exists(fullPath);
         if (exists) return true;
+
+        if (Directory.Exists(fullPath))
+            return true;
         
         Logger.Error($"{file} does not exist.");
         return false;

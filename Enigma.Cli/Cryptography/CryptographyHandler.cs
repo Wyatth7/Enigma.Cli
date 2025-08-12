@@ -4,25 +4,46 @@ namespace Enigma.Cli.Cryptography;
 
 public static class CryptographyHandler
 {
+    private static readonly Crypto Crypto = new();
+    
     public static async Task Handle(ParsedEncryptionArguments encryptionArguments)
     {
-        var type = encryptionArguments.Recurse ? typeof(RecurseCrypto) : typeof(Crypto);
-        var crypto = Activator.CreateInstance(type);
-
-        if (crypto is null)
+        if (encryptionArguments.Recurse)
         {
-            Logger.Error("Could not create instance of crypto.", true);
+            await RecurseCrypto(encryptionArguments);
             return;
         }
-        
-        await ExecuteAction(encryptionArguments, (ICrypto)crypto);
+
+        await ExecuteAction(encryptionArguments);
     }
 
-    private static async Task ExecuteAction(ParsedEncryptionArguments encryptionArguments, ICrypto crypto)
+    private static async Task RecurseCrypto(ParsedEncryptionArguments encryptionArguments)
+    {
+        if (File.Exists(encryptionArguments.File))
+        {
+            await ExecuteAction(encryptionArguments);
+            return;
+        }
+
+        await RunOnDirectory(encryptionArguments);
+    }
+
+    private static async Task RunOnDirectory(ParsedEncryptionArguments encryptionArguments)
+    {
+        var files = Directory.GetFiles(encryptionArguments.File);
+        foreach (var file in files)
+            await ExecuteAction(encryptionArguments with { File = file });
+        
+        var directories = Directory.GetDirectories(encryptionArguments.File);
+        foreach (var directory in directories)
+            await RunOnDirectory(encryptionArguments with { File = directory });
+    }
+
+    private static async Task ExecuteAction(ParsedEncryptionArguments encryptionArguments)
     {
         if (encryptionArguments.Encrypt)
-            await crypto.Encrypt(encryptionArguments.File, encryptionArguments.Key);
+            await Crypto.Encrypt(encryptionArguments.File, encryptionArguments.Key);
         else 
-            await crypto.Decrypt(encryptionArguments.File, encryptionArguments.Key);
+            await Crypto.Decrypt(encryptionArguments.File, encryptionArguments.Key);
     }
 }
