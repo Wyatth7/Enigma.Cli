@@ -12,10 +12,8 @@ public class EncryptDirector : ICommandDirector<ParsedEncryptionArguments>
         await CryptographyHandler.Handle(parsed);
         
         Logger.KeyValue(
-            $"{(parsed.Encrypt ? "Encryption" : "Decryption")} Succeeded",
-            parsed.File, 
-            ConsoleColor.Yellow, 
-            ConsoleColor.Blue,
+            LogData.Create( $"{(parsed.Encrypt ? "Encryption" : "Decryption")} Succeeded", ConsoleColor.Yellow),
+            LogData.Create(parsed.File, ConsoleColor.Blue),
             " => ");
     }
 

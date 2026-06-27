@@ -13,14 +13,13 @@ public static class Logger
         if (exit) Environment.Exit(exitCode);
    }
 
-   public static void KeyValue(string key, string value, ConsoleColor keyColor = ConsoleColor.Cyan, ConsoleColor valueColor = ConsoleColor.Cyan, string separator = " ")
+   public static void KeyValue(LogData key, LogData value, string separator = " ")
    {
-       Paint(key, keyColor);
-       Paint(string.IsNullOrWhiteSpace(separator) ? ":" : separator, keyColor);
-       Paint(value, valueColor);
+       Paint(key.Message, key.Color);
+       Paint(string.IsNullOrWhiteSpace(separator) ? ":" : separator, key.Color);
+       Paint(value.Message, value.Color);
        Console.WriteLine();
    }
-
 
    private static void PaintLine(string message, ConsoleColor color = ConsoleColor.Cyan) 
        => Paint(message, color, true);
@@ -67,3 +66,7 @@ public static class Logger
    //     }
    // }
 }
+   public record struct LogData(string Message, ConsoleColor Color)
+   {
+       public static LogData Create(string message, ConsoleColor color =  ConsoleColor.Cyan) => new(message, color); 
+   }

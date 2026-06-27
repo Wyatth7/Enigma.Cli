@@ -4,13 +4,8 @@ namespace Enigma.Cli;
 
 public class HelpPrinter
 {
-    private StringBuilder _builder;
-    
-    public HelpPrinter()
-    {
-        _builder = new StringBuilder();
-    }
-    
+    private readonly StringBuilder _builder = new();
+
     public string Print()
     {
         AddDescription();

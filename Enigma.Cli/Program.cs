@@ -4,13 +4,11 @@ using Enigma.Cli;
 if (args.Length == 0 || args[0] == "--version" || args[0] == "-v")
 {
     Logger.KeyValue(
-        "Enigma CLI",
-        $"v{Assembly.GetExecutingAssembly()
+        LogData.Create("Enigma CLI", ConsoleColor.Blue),
+        LogData.Create( $"v{Assembly.GetExecutingAssembly()
             .GetName()
             .Version!
-            .ToString(3)}",
-        ConsoleColor.Blue,
-        ConsoleColor.Yellow,
+            .ToString(3)}", ConsoleColor.Yellow),
         " => ");
     return;
 }
