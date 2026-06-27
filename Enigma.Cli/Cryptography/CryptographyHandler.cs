@@ -4,7 +4,7 @@ namespace Enigma.Cli.Cryptography;
 
 public static class CryptographyHandler
 {
-    private static readonly Crypto Crypto = new();
+    private static readonly BufferedCrypto BufferedCrypto = new();
     
     public static async Task Handle(ParsedEncryptionArguments encryptionArguments)
     {
@@ -42,8 +42,8 @@ public static class CryptographyHandler
     private static async Task ExecuteAction(ParsedEncryptionArguments encryptionArguments)
     {
         if (encryptionArguments.Encrypt)
-            await Crypto.Encrypt(encryptionArguments.File, encryptionArguments.Key);
+            await BufferedCrypto.Encrypt(encryptionArguments.File, encryptionArguments.Key);
         else 
-            await Crypto.Decrypt(encryptionArguments.File, encryptionArguments.Key);
+            await BufferedCrypto.Decrypt(encryptionArguments.File, encryptionArguments.Key);
     }
 }
